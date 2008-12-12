@@ -1,0 +1,5 @@
+h1. Ubuntu Settings
+
+Some custom scripts I want to have available on every Ubuntu pc.
+
+Some vim scripts too.
