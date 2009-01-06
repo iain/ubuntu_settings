@@ -1,0 +1,19 @@
+[user]
+  email = github@iain.nl
+  name = Iain Hecker
+[core]
+	excludesfile = /home/iain/.gitignore
+[github]
+	user = iain
+	token = XXX
+[apply]
+  whitespace = nowarn
+[alias]
+  co = checkout
+  st = status
+  ci = commit
+  up = pull
+[color]
+  diff = auto
+  status = auto
+  branch = auto
