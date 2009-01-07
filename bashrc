@@ -191,13 +191,13 @@ __prompt_command() {
     alias up="pull"
     alias cdb="cd $base_dir"
     base_dir="$(basename "${base_dir}")"
-    working_on="$base_dir:"
+    working_on="[$base_dir] "
     __vcs_prefix="($vcs)"
     __vcs_ref="[$ref]"
     __vcs_sub_dir="${sub_dir}"
     __vcs_base_dir="${base_dir/$HOME/~}"
   else
-    __vcs_prefix=''
+    __vcs_prefix=':'
     __vcs_base_dir="${PWD/$HOME/~}"
     __vcs_ref=''
     __vcs_sub_dir=''
@@ -212,17 +212,17 @@ __prompt_command() {
 PROMPT_COMMAND=__prompt_command
 
 if [ "`id -u`" -eq 0 ]; then
-  PS1='\[\e]2;\h::$__pretty_pwd\a\e]1;$__tab_title\a\]\[\033[1;37;41m\]\u\[\033[00;00m\]:\[\033[1;32;33m\]${__vcs_prefix}\[\033[00;00m\]\[\033[1;32;34m\]${__vcs_base_dir}\[\033[00;00m\]\[\033[1;32;33m\]${__vcs_ref}\[\033[00;00m\]\[\033[1;32;34m\]${__vcs_sub_dir}\[\033[00;00m\]\$ '
+  PS1='\[\e]2;\h:$__pretty_pwd\a\e]1;$__tab_title\a\]\[\033[1;37;41m\]\u\[\033[00;00m\]\[\033[1;32;35m\]${__vcs_prefix}\[\033[1;32;34m\]${__vcs_base_dir}\[\033[1;32;33m\]${__vcs_ref}\[\033[1;32;34m\]${__vcs_sub_dir}\[\033[1;37;41m\]\$\[\033[00;00m\] '
 else
-  PS1='\[\e]2;\h::$__pretty_pwd\a\e]1;$__tab_title\a\]\[\033[1;32;32m\]\u\[\033[00;00m\]:\[\033[1;32;33m\]${__vcs_prefix}\[\033[00;00m\]\[\033[1;32;34m\]${__vcs_base_dir}\[\033[00;00m\]\[\033[1;32;33m\]${__vcs_ref}\[\033[00;00m\]\[\033[1;32;34m\]${__vcs_sub_dir}\[\033[00;00m\]\$ '
+  PS1='\[\e]2;\h:$__pretty_pwd\a\e]1;$__tab_title\a\]\[\033[1;32;32m\]\u\[\033[1;32;35m\]${__vcs_prefix}\[\033[1;32;34m\]${__vcs_base_dir}\[\033[1;32;33m\]${__vcs_ref}\[\033[1;32;34m\]${__vcs_sub_dir}\[\033[1;32;32m\]\$\[\033[00;00m\] '
 fi
 
 # Show the currently running command in the terminal title:
 # http://www.davidpashley.com/articles/xterm-titles-with-bash.html
 if [ -z "$TM_SUPPORT_PATH"]; then
 case $TERM in
-  rxvt|*term|xterm-color)
-    trap 'echo -e "\e]1;$working_on>$BASH_COMMAND<\007\c"' DEBUG
+  rxvt|*term|xterm*)
+    trap 'echo -e "\e]2;$working_on$BASH_COMMAND\007\c"' DEBUG
   ;;
 esac
 fi
