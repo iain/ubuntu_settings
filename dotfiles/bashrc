@@ -1,4 +1,5 @@
-# jruby stuff:
+# ruby stuff:
+export PATH=$PATH:/urs/lib/ruby/gems/1.8/bin
 export JAVA_HOME=/usr/lib/jvm/java-6-sun-1.6.0.10
 export JRUBY_HOME=/usr/src/jruby-1.1.2
 export PATH=$PATH:$JRUBY_HOME/bin
