@@ -50,6 +50,11 @@ sudo gem install \
   iain-not \
   nifty-generators \
   iain-pizza-generators \
+  mislav-will_paginate \
+  thoughtbot-factory_girl \
+  thoughtbot-shoulda \
+  authlogic \
+  mocha \
   haml \
   rak \
   wirble \
