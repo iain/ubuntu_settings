@@ -28,6 +28,10 @@ ruby install_dotfiles.rb
 cd ~
 mkdir -p ~/.vim/tmp/swap
 mkdir -p ~/.vim/tmp/backup
+git clone git://github.com/tpope/vim-rails.git
+cd vim-rails
+rake install
+cd ~
 
 # Install RubyGems
 # Goto http://rubyforge.org/frs/?group_id=126 for the newest version
