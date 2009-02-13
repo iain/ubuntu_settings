@@ -17,6 +17,7 @@ sudo apt-get install \
   libxml-ruby \
   libxslt-ruby \
   libxslt-dev \
+  graphviz \
   -y
 
 # Get the project it comes from and install it
@@ -70,4 +71,5 @@ sudo gem install \
   faker \
   railroad \
   ya2yaml \
-  giraffesoft-resource_controller
+  giraffesoft-resource_controller \
+  hpricot

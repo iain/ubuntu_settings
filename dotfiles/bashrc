@@ -13,6 +13,18 @@ done
 export ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/server/
 export LD_LIBRARY_PATH=$ORACLE_HOME/lib
 
+# Rakefile completion
+export COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}
+ 
+function _check_rakefile() {
+  if [ ! -e Rakefile ]; then
+    return
+  fi
+ 
+  local tasks=`rake --silent -T | awk '{print $2}'`
+  COMPREPLY=( $(compgen -W "${tasks}" -- $2) )
+}
+complete -F _check_rakefile -o default rake
 
 # Genereric bash configuration (with color) below:
 # =============================================================================
