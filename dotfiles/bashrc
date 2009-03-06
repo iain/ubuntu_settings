@@ -243,7 +243,8 @@ __prompt_command() {
 PROMPT_COMMAND=__prompt_command
 
 if [ "`id -u`" -eq 0 ]; then
-  PS1='\[\e]2;\h:$__pretty_pwd\a\e]1;$__tab_title\a\]\[\033[1;37;41m\]\u\[\033[00;00m\]\[\033[1;32;35m\]${__vcs_prefix}\[\033[1;32;34m\]${__vcs_base_dir}\[\033[1;32;33m\]${__vcs_ref}\[\033[1;32;34m\]${__vcs_sub_dir}\[\033[1;37;41m\]\$\[\033[00;00m\] '
+  # no more coloring root prompt until properly done
+#  PS1='\[\e]2;\h:$__pretty_pwd\a\e]1;$__tab_title\a\]\[\033[1;37;41m\]\u\[\033[00;00m\]\[\033[1;32;35m\]${__vcs_prefix}\[\033[1;32;34m\]${__vcs_base_dir}\[\033[1;32;33m\]${__vcs_ref}\[\033[1;32;34m\]${__vcs_sub_dir}\[\033[1;37;41m\]\$\[\033[00;00m\] '
 else
   PS1='\[\e]2;\h:$__pretty_pwd\a\e]1;$__tab_title\a\]\[\033[1;32;32m\]\u\[\033[1;32;35m\]${__vcs_prefix}\[\033[1;32;34m\]${__vcs_base_dir}\[\033[1;32;33m\]${__vcs_ref}\[\033[1;32;34m\]${__vcs_sub_dir}\[\033[1;32;32m\]\$\[\033[00;00m\] '
 fi
