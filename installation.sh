@@ -72,4 +72,8 @@ sudo gem install \
   railroad \
   ya2yaml \
   giraffesoft-resource_controller \
-  hpricot
+  hpricot \
+  rack \
+  term-ansicolor \
+  treetop \
+  diff-lcs

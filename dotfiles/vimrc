@@ -105,3 +105,8 @@ map <A-Down> :set lines-=3<CR>:tab ball<CR>:let g:toggleTabs = 1<CR>
 " tab navigation (next tab or next buffer) with alt left / alt right
 map <silent><A-Right> :if g:toggleTabs == 1<CR>:tabnext<CR>:else<CR>:bn<CR>:endif<CR>
 map <silent><A-Left> :if g:toggleTabs == 1<CR>:tabprevious<CR>:else<CR>:bp<CR>:endif<CR> 
+
+" mark whitespace at the end of lines
+hi link localWhitespaceError Error
+au Syntax * syn match localWhitespaceError /\(\zs\%#\|\s\)\+$/ display
+au Syntax * syn match localWhitespaceError / \+\ze\t/ display
