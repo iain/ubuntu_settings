@@ -36,7 +36,7 @@ __prompt_command() {
     [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "${_red}"
   }
   function parse_git_branch {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/$(parse_git_dirty)\1${_yellow}/"
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/$(parse_git_dirty)\1/"
   }
 
   git_dir() {
@@ -109,7 +109,7 @@ __prompt_command() {
   fi
  
   last_command=$(history 1 | sed -e "s/^[ ]*[0-9]*[ ]*//g")
-  __tab_title="$working_on[$last_command]"
+  __tab_title="$working_on[$last_command]:"
   __pretty_pwd="${PWD/$HOME/~}"
 }
 
@@ -119,7 +119,7 @@ PROMPT_COMMAND=__prompt_command
 # black and white prompt
 #PS1='\[\e]2;\h::$__pretty_pwd\a\e]1;$__tab_title\a\]\u:$__vcs_prefix\[${_bold}\]${__vcs_base_dir}\[${_normal}\]${__vcs_ref}\[${_bold}\]${__vcs_sub_dir}\[${_normal}\]\$ '
 # COLOR
-PS1='\[\e]2;\h::$__pretty_pwd\a\e]1;$__tab_title\a\]\[$_bold\]\[$_magenta\]$__vcs_prefix\[$_green\]» \[$_normal\]\[$_blue\]\h\[$_bold\] \[$_user_color\]\u \[$_blue\]${__vcs_base_dir}\[$_yellow\]${__vcs_ref}\[$_blue\]${__vcs_sub_dir}\n\[$_green\]\$\[$_normal\] '
+PS1='\[\e]2;$__pretty_pwd\a\e]1;$__tab_title\a\]\[$_bold\]\[$_magenta\]$__vcs_prefix\[$_green\]» \[$_normal\]\[$_blue\]\h\[$_bold\] \[$_user_color\]\u \[$_blue\]${__vcs_base_dir}\[$_yellow\]${__vcs_ref}\[$_blue\]${__vcs_sub_dir}\n\[$_green\]\$\[$_normal\] '
 
 # Show the currently running command in the terminal title:
 # http://www.davidpashley.com/articles/xterm-titles-with-bash.html
