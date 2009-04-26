@@ -4,6 +4,7 @@
 sudo apt-get install \
   git-core \
   ruby \
+  rake \
   vim-full \
   rdoc \
   subversion \
@@ -20,6 +21,7 @@ sudo apt-get install \
   libxslt-dev \
   graphviz \
   rubygems \
+  colordiff \
   -y
 
 # Get the project it comes from and install it
