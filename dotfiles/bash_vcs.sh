@@ -132,7 +132,7 @@ PROMPT_COMMAND=__prompt_command
 # black and white prompt
 #PS1='\[\e]2;\h::$__pretty_pwd\a\e]1;$__tab_title\a\]\u:$__vcs_prefix\[${_bold}\]${__vcs_base_dir}\[${_normal}\]${__vcs_ref}\[${_bold}\]${__vcs_sub_dir}\[${_normal}\]\$ '
 # COLOR
-PS1='\[\e]2;$__pretty_pwd\a\e]1;$__tab_title\a\]\[$_bold\]\[$_user_color\]\u \[$_magenta\]$__vcs_prefix\[$_blue\]${__vcs_base_dir}\[$_yellow\]${__vcs_ref}\[$_blue\]${__vcs_sub_dir}\n\[$_green\]\$\[$_normal\] '
+PS1='\[\e]2;$__pretty_pwd\a\e]1;$__tab_title\a\]\[$_bold\]\[$_user_color\]\u \[$_magenta\]$__vcs_prefix\[$_blue\]${__vcs_base_dir}\[$_yellow\]${__vcs_ref}\[$_blue\]${__vcs_sub_dir}\n\[$_user_color\]\$\[$_normal\] '
 
 # Show the currently running command in the terminal title:
 # http://www.davidpashley.com/articles/xterm-titles-with-bash.html

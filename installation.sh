@@ -25,6 +25,7 @@ sudo apt-get install \
   -y
 
 # Get the project it comes from and install it
+rm -rf ~/.ubuntu_settings
 git clone git://github.com/iain/ubuntu_settings.git ~/.ubuntu_settings
 cd ~/.ubuntu_settings/
 ruby install_dotfiles.rb
