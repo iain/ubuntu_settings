@@ -10,6 +10,7 @@ sudo apt-get install \
   ruby1.8-dev \
   libopenssl-ruby1.8 \
   libsqlite3-ruby1.8 \
+  libnotify-bin \
   imagemagick \
   build-essential \
   libmagick9-dev \
@@ -36,9 +37,9 @@ cd ~
 
 # Install RubyGems
 # Goto http://rubyforge.org/frs/?group_id=126 for the newest version
-wget http://rubyforge.org/frs/download.php/45905/rubygems-1.3.1.tgz
-tar -vxf rubygems-1.3.1.tgz
-cd rubygems-1.3.1/
+wget http://rubyforge.org/frs/download.php/45905/rubygems-1.3.2.tgz
+tar -vxf rubygems-1.3.2.tgz
+cd rubygems-1.3.2/
 sudo ruby setup.rb
 sudo ln -s /usr/bin/gem1.8 /usr/bin/gem
 
@@ -52,14 +53,12 @@ sudo gem install \
   jscruggs-metric_fu \
   mongrel \
   rmagick \
-  iain-not \
-  nifty-generators \
-  iain-pizza-generators \
   mislav-will_paginate \
   thoughtbot-factory_girl \
   thoughtbot-shoulda \
   authlogic \
   mocha \
+  rr \
   haml \
   rak \
   wirble \
@@ -67,11 +66,10 @@ sudo gem install \
   rails-rspec \
   nokogiri \
   cucumber \
-  brynary-webrat \
+  webrat \
   faker \
   railroad \
   ya2yaml \
-  giraffesoft-resource_controller \
   hpricot \
   rack \
   term-ansicolor \

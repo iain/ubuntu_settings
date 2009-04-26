@@ -72,18 +72,6 @@ filetype plugin on
 filetype indent on
 colorscheme twilight
 
-" tab navigation like firefox
-:nmap <C-S-tab> :tabprevious<cr>
-:nmap <C-tab> :tabnext<cr>
-:map <C-S-tab> :tabprevious<cr>
-:map <C-tab> :tabnext<cr>
-:imap <C-S-tab> <ESC>:tabprevious<cr>i
-:imap <C-tab> <ESC>:tabnext<cr>i
-:nmap <C-t> :tabnew<cr>
-:imap <C-t> <ESC>:tabnew<cr> 
-:map <C-w> :tabclose<cr>  
-"show tabs/ hide tabs / naviguate through tabs
-
 "tab labels show the filename without path(tail) (see :help statusline for options)
 :set guitablabel=%m%t
 
