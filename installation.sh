@@ -19,6 +19,7 @@ sudo apt-get install \
   libxslt-ruby \
   libxslt-dev \
   graphviz \
+  rubygems \
   -y
 
 # Get the project it comes from and install it
@@ -35,13 +36,13 @@ cd vim-rails
 rake install
 cd ~
 
-# Install RubyGems
-# Goto http://rubyforge.org/frs/?group_id=126 for the newest version
-wget http://rubyforge.org/frs/download.php/45905/rubygems-1.3.2.tgz
-tar -vxf rubygems-1.3.2.tgz
-cd rubygems-1.3.2/
-sudo ruby setup.rb
+
+# RubyGems config
+sudo gem update --system
 sudo ln -s /usr/bin/gem1.8 /usr/bin/gem
+# no local installs please!
+sudo chown root:root -R ~/.gem
+sudo chmod 0700 -R ~/.gem
 
 # Install a lot of gems to get you started
 sudo gem sources --add http://gems.github.com
@@ -50,9 +51,18 @@ sudo gem install \
   rspec \
   rspec-rails \
   ZenTest \
+  rcov \
+  roodi \
+  reek \
+  redgreen \
+  flay \
+  flog \
+  voloko-sdoc \
+  syntax \
   jscruggs-metric_fu \
   mongrel \
   rmagick \
+  fastercsv \
   mislav-will_paginate \
   thoughtbot-factory_girl \
   thoughtbot-shoulda \
@@ -62,8 +72,6 @@ sudo gem install \
   haml \
   rak \
   wirble \
-  rspec \
-  rails-rspec \
   nokogiri \
   cucumber \
   webrat \
@@ -74,4 +82,5 @@ sudo gem install \
   rack \
   term-ansicolor \
   treetop \
-  diff-lcs
+  diff-lcs \
+  --no-ri --no-rdoc
