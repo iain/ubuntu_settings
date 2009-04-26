@@ -1,3 +1,5 @@
+PROJECT_PARENT_DIRS[0]="$HOME/code"
+
 export PATH=$PATH:/usr/lib/ruby/gems/1.8/bin
 
 # If not running interactively, don't do anything
@@ -17,7 +19,9 @@ shopt -s checkwinsize
 
 . ~/.bash_vcs.sh
 . ~/.bash_aliases.sh
+. ~/.project_alias.sh
 
 if [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
 fi
+

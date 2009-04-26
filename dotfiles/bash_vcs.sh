@@ -19,7 +19,11 @@ else
 fi
 
 __prompt_command() {
-  local vcs base_dir sub_dir ref last_command
+  local vcs base_dir sub_dir ref last_command diff_options status_options
+
+  diff_options="" # diff_options will get overrided by svn, because it needs colordiff as piped argument
+  status_options="" # status in svn will automatically get the base_dirs status, so it behaves as git
+
   sub_dir() {
     local sub_dir
     # uncomment next line for OSX:
@@ -37,6 +41,9 @@ __prompt_command() {
   }
   function parse_git_branch {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/$(parse_git_dirty)\1/"
+  }
+  function dirty_svn {
+    if `svnversion $1 | grep -Eq 'M$'`; then echo "${_red}`svnversion | grep -o '[0-9]*' --color=no`"; else echo "${_yellow}`svnversion`"; fi
   }
 
   git_dir() {
@@ -62,8 +69,14 @@ __prompt_command() {
     while [ -d "$base_dir/../.svn" ]; do base_dir="$base_dir/.."; done
     base_dir=`cd $base_dir; pwd`
     sub_dir="/$(sub_dir "${base_dir}")"
-    ref=`svnversion`
+    ref=$(dirty_svn "$base_dir")
     vcs="svn"
+    diff_options=" | colordiff"
+    if [ " $sub_dir " = " / " ]; then
+      status_options=""
+    else # perform a status for the entire project
+      status_options=" ${base_dir}"
+    fi
     alias pull="svn up"
     alias commit="svn commit"
     alias push="svn ci"
@@ -90,13 +103,13 @@ __prompt_command() {
   git_dir || svn_dir || bzr_dir
  
   if [ -n "$vcs" ]; then
-    alias st="$vcs status"
-    alias d="$vcs diff"
+    alias st="$vcs status$status_options"
+    alias d="$vcs diff$diff_options"
     alias up="pull"
     alias cdb="cd $base_dir"
     base_dir="$(basename "${base_dir}")"
     working_on="$base_dir"
-    __vcs_prefix="$vcs"
+    __vcs_prefix="$vcs "
     __vcs_ref=" $ref "
     __vcs_sub_dir="${sub_dir}"
     __vcs_base_dir="${base_dir/$HOME/~}"
@@ -119,7 +132,7 @@ PROMPT_COMMAND=__prompt_command
 # black and white prompt
 #PS1='\[\e]2;\h::$__pretty_pwd\a\e]1;$__tab_title\a\]\u:$__vcs_prefix\[${_bold}\]${__vcs_base_dir}\[${_normal}\]${__vcs_ref}\[${_bold}\]${__vcs_sub_dir}\[${_normal}\]\$ '
 # COLOR
-PS1='\[\e]2;$__pretty_pwd\a\e]1;$__tab_title\a\]\[$_bold\]\[$_magenta\]$__vcs_prefix\[$_green\]» \[$_normal\]\[$_blue\]\h\[$_bold\] \[$_user_color\]\u \[$_blue\]${__vcs_base_dir}\[$_yellow\]${__vcs_ref}\[$_blue\]${__vcs_sub_dir}\n\[$_green\]\$\[$_normal\] '
+PS1='\[\e]2;$__pretty_pwd\a\e]1;$__tab_title\a\]\[$_bold\]\[$_user_color\]\u \[$_magenta\]$__vcs_prefix\[$_blue\]${__vcs_base_dir}\[$_yellow\]${__vcs_ref}\[$_blue\]${__vcs_sub_dir}\n\[$_green\]\$\[$_normal\] '
 
 # Show the currently running command in the terminal title:
 # http://www.davidpashley.com/articles/xterm-titles-with-bash.html
