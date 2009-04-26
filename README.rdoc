@@ -1,10 +1,12 @@
-h1. Ubuntu Settings
+= Ubuntu Settings
 
 Some custom scripts I want to have available on every Ubuntu pc.
 
 Some vim scripts too.
 
-h2. Installation
+Major thanks to Relavance's etc project: http://github.com/relevance/etc
+
+== Installation
 
 If you don't have git installed, wget the installation file first:
 
@@ -20,16 +22,16 @@ To update, after installing:
   git pull origin master
   ruby install-dotfiles.rb
 
-h2. What's in it?
+== What's in it?
 
 Some examples:
 
-h3. Pretty colors in bash
+=== Pretty colors in bash
 
 I use 2 lines at the moment for the prompt. The first will contain the user (green if normal user, red if root), followed by the directory
 The next line starts cleanly with the dollar-sign or hash-sign. Mostly used commands, like grep are also colored.
 
-h3. Version control
+=== Version control
 
 Borrowing from relavance's etc-project on github, I optimized the VCS prompt for ubuntu and color usage. You can however easily change it for OSX by commenting out a line in it.
 
@@ -39,27 +41,27 @@ After the branch or version it shows in which subdir of the project you are.
 
 It contains some aliases to help you:
 
-- "cdb" goes to the base dir of the project
-- "st" shows changes, and for svn it'll behave like git, so if you're in a subdir of the project, it'll still get status for the entire project
-- "d" will show the diff, even with color for SVN
-- "up" will always pull or update
-- "commit" will always commit
+* "cdb" goes to the base dir of the project
+* "st" shows changes, and for svn it'll behave like git, so if you're in a subdir of the project, it'll still get status for the entire project
+* "d" will show the diff, even with color for SVN
+* "up" will always pull or update
+* "commit" will always commit
 
 It also sets the title of your terminal to something sweet so you can see which tab is doing what (one running the server, the other running tests, etc).
 
 Also some default gitignore and gitconfig files. Update them to suite your needs.
 
-h3. A lot of aliases
+=== A lot of aliases
 
 Again, borrowed from Relevance. See dotfiles/bash_aliases.sh for that.
 
-h3. Ruby stuff
+=== Ruby stuff
 
 There are a number of aliases, like 'dbm' which migrates the development database and copies it to test (handy for autotest).
 
 Installation installs a lot of stuff for Ruby development.
 
-h3. Project aliases
+=== Project aliases
 
 Edit ~/.bashrc and edit the first line, and add more if you like
 
@@ -67,7 +69,7 @@ Edit ~/.bashrc and edit the first line, and add more if you like
 
 Now every subdir of one of the PROJECT_PARENT_DIRS is an alias. If you have a dir "~/code/awesome" then "awesome" will be an alias to cd to that dir.
 
-h3. VIM
+=== VIM
 
 Just some of my favorite vim settings, my favorite theme (twilight) and some handy keymaps.
 
@@ -75,10 +77,10 @@ It also marks whitespace at the end of lines as erros (dark red in twilight them
 
 Inluded are HAML and SASS syntax files.
 
-h3. Autotest
+=== Autotest
 
 A libnotify hook, with nice ruby icons and works with RSpec. Works incredibly well with the new notify system in Ubuntu 9.04
 
-h3. irb
+=== irb
 
 A lot of handy irb stuff, like syntax highlighting and showing performed queries in script/console
