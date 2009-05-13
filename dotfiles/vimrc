@@ -1,100 +1,332 @@
-" All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
-" /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
-" you can find below.  If you wish to change any of those settings, you should
-" do it in this file (/etc/vim/vimrc), since debian.vim will be overwritten
-" everytime an upgrade of the vim packages is performed.  It is recommended to
-" make changes after sourcing debian.vim since it alters the value of the
-" 'compatible' option.
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
+autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby,perl,tex set shiftwidth=2
+ 
+autocmd FileType c,cpp,java,javascript,python,xml,xhtml,html set shiftwidth=2
+ 
+augroup filetypedetect
+  au! BufNewFile,BufRead *.ch setf cheat
+  au BufNewFile,BufRead *.liquid setf liquid
+  au! BufRead,BufNewFile *.haml setfiletype haml
+  autocmd BufNewFile,BufRead *.yml setf eruby
+augroup END
+ 
+autocmd BufNewFile,BufRead *_test.rb source ~/.vim/ftplugin/shoulda.vim
+"use \rci in normal mode to indent ruby code,should install kode ,sudo gem
+"install kode
+nmap <leader>rci :%!ruby-code-indenter<cr>
+ 
+autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+" Load matchit (% to bounce from do to end, etc.)
+runtime! plugin/matchit.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ 
+" Minibuffer Explorer Settings
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+ 
+" Change which file opens after executing :Rails command
+let g:rails_default_file='config/database.yml'
+ 
+set nocompatible          " We're running Vim, not Vi!
+if has("gui_running") 
+  "set guifont=Consolas:h13
+  set guitablabel=%M%t
+  "macmenu File.Close key=<nop>
+  no <silent> <C-w> :bd<cr>
+  ino <silent> <C-w> <C-o>:bd<cr>
+  "set go-=T
+end
 
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages available in Debian.
-runtime! debian.vim
+set nobackup
+set nowritebackup
+set path=$PWD/public/**,$PWD/**
+filetype plugin indent on " Enable filetype-specific indenting and plugins
+set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
 
-" Uncomment the next line to make Vim more Vi-compatible
-" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
-" options, so any other options should be set AFTER setting 'compatible'.
-"set compatible
+"set guioptions-=m
+"set statusline=%<%f\ %h%m%r%=%-20.(line=%l,col=%c%V,totlin=%L%)\%h%m%r%=%-40(,%n%Y%)\%P
+set statusline=
+set statusline+=%3.3n\                       " buffer number
+set statusline+=%f\                          " file name
+set statusline+=%h%1*%m%r%w%0*               " flags
+set statusline+=\[%{strlen(&ft)?&ft:'none'}, " filetype
+set statusline+=%{strlen(&fenc)?&fenc:&enc}%{&bomb?'/bom':''}, " encoding
+set statusline+=%{&fileformat}]              " file format
+set statusline+=%{exists('loaded_VCSCommand')?VCSCommandGetStatusLine():''} " show vcs status
+set statusline+=%{exists('loaded_scmbag')?SCMbag_Info():''} " show vcs status
+set statusline+=%=                           " right align
+set statusline+=\[%{exists('loaded_taglist')?Tlist_Get_Tag_Prototype_By_Line(expand('%'),line('.')):'no\ tags'}]\   " show tag prototype
+set statusline+=0x%-8B\                      " current char
+set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
-" Vim5 and later versions support syntax highlighting. Uncommenting the next
-" line enables syntax highlighting by default.
-syntax on
+set laststatus=2
+set vb t_vb=<CR>
+hi Comment gui=italic
 
-" If using a dark background within the editing area and syntax highlighting
-" turn on this option as well
-set background=dark
+map <C-q> :mksession! ~/.vim/.session <cr>
+map <C-//> map ,# :s/^/#/<CR>
+map <S-//> :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR><Esc>:nohlsearch<CR>
+imap <C-Up> :tabn<CR>
+imap <C-Down> :tabp<CR>
+imap <c-s> <esc><c-s>
 
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
-"if has("autocmd")
-"  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-"    \| exe "normal g'\"" | endif
-"endif
+nmap <C-C> "+gP
+imap <C-C> <ESC><C-C>i
+vmap <C-C> "+y
 
-" Uncomment the following to have Vim load indentation rules according to the
-" detected filetype. Per default Debian Vim only load filetype specific
-" plugins.
-"if has("autocmd")
-"  filetype indent on
-"endif
+colorscheme ir_black
 
-" The following are commented out as they cause vim to behave a lot
-" differently from regular Vi. They are highly recommended though.
-"set showcmd		" Show (partial) command in status line.
-set showmatch		" Show matching brackets.
-"set ignorecase		" Do case insensitive matching
-"set smartcase		" Do smart case matching
-set incsearch		" Incremental search
-"set autowrite		" Automatically save before commands like :next and :make
-"set hidden             " Hide buffers when they are abandoned
-set mouse=a		" Enable mouse usage (all modes) in terminals
+syntax on                 " Enable syntax highlighting
+set visualbell
+ 
+" Load matchit (% to bounce from do to end, etc.)
+runtime! macros/matchit.vim
+set nonumber
+ 
+augroup myfiletypes
+  " Clear old autocmds in group
+  autocmd!
+  " autoindent with two spaces, always expand tabs
+  autocmd FileType ruby,eruby,yaml set ai sw=2 sts=2 et
+augroup END
 
-" Source a global configuration file if available
-" XXX Deprecated, please move your changes here in /etc/vim/vimrc
-if filereadable("/etc/vim/vimrc.local")
-  source /etc/vim/vimrc.local
-endif
+nmap <silent> <Leader>p :NERDTreeToggle<CR>
 
-map :W :w
-map :WQ :wq
-map :Bd :bd
-set background=dark
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set number
-set smartindent
-set smarttab
+"make <c-l> clear the highlight as well as redraw
+nnoremap <C-L> :nohls<CR><C-L>
+inoremap <C-L> <C-O>:nohls<CR>
+
+"map to bufexplorer
+nnoremap <C-B> :BufExplorer<cr>
+
+"map to fuzzy finder text mate stylez
+nnoremap <c-f> :FuzzyFinderTextMate<CR>
+
+"map Q to something useful
+noremap Q gq
+
+"make Y consistent with C and D
+nnoremap Y y$
+
+map <leader>b :FuzzyFinderBuffer<CR>
+map <leader>] :FuzzyFinderMruFile<CR>
+map <leader>r :ruby finder.rescan!<CR>
+map ,t :Rake<CR>
+
+let g:proj_flags="imstg"
+let g:fuzzy_ceiling=20000
+let g:fuzzy_matching_limit=25
+let g:fuzzy_ignore = "gems/*, log/*"
+set cursorline
+
+"folding settings
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1
+
+set wildmode=list:longest   "make cmdline tab completion similar to bash
+set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+
+"vertical/horizontal scroll off settings
+set scrolloff=3
+set sidescrolloff=7
+set sidescroll=1
+
+set cf  " Enable error files & error jumping.
+set clipboard+=unnamed  " Yanks go on clipboard instead.
+set history=256  " Number of things to remember in history.
+set autowrite  " Writes on make/shell commands
+set ruler  " Ruler on
+set nu  " Line numbers on
+set nowrap  " Line wrapping off
+set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
+
+" Formatting (some of these are for coding in C and C++)
+set ts=2  " Tabs are 2 spaces
+set bs=2  " Backspace over everything in insert mode
+set shiftwidth=2  " Tabs under smart indent
+set nocp incsearch
+set cinoptions=:0,p0,t0
+set cinwords=if,else,while,do,for,switch,case
+set formatoptions=tcqr
+set cindent
 set autoindent
-set wildmenu
-set backupdir=~/.vim/tmp/backup
-set directory=~/.vim/tmp/swap
-filetype plugin on
-filetype indent on
-colorscheme twilight
+set smarttab
+set expandtab
 
-"tab labels show the filename without path(tail) (see :help statusline for options)
-:set guitablabel=%m%t
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+" BEGIN rails-toolkit settings
+runtime debian.vim
+runtime macros/rails-toolkit.vim
+" " END rails-toolkit setting
+ hi link localWhitespaceError Error
+ au Syntax * syn match localWhitespaceError /\(\zs\%#\|\s\)\+$/ display
+ au Syntax * syn match localWhitespaceError / \+\ze\t/ display
 
-"variable
-:let g:toggleTabs = 0
+" Visual
+set showmatch  " Show matching brackets.
+set mat=5  " Bracket blinking.
+set list
+" Show $ at end of line and trailing space as ~
+set lcs=tab:\ \ ,extends:>,precedes:<
+set novisualbell  " No blinking .
+set noerrorbells  " No noise.
+set laststatus=2  " Always show status line.
 
-"when pressing F3, open all buffer in tabs / close all tabs
-map <silent><F3> :if g:toggleTabs == 1<CR>:tabo<CR>:set lines+=3<CR>:let g:toggleTabs = 0<CR>:else<CR>:set lines-=3<CR>:tab ball<CR>:let g:toggleTabs = 1<CR>:endif<CR>
+" gvim specific
+set mousehide  " Hide mouse after chars typed
+"set mouse=a  " Mouse in all modes
 
-" tab navigation (next tab or next buffer) (firefox style)
-map <silent><C-tab> :if g:toggleTabs == 1<CR>:tabnext<CR>:else<CR>:bn<CR>:endif<CR>
-map <silent><C-S-tab> :if g:toggleTabs == 1<CR>:tabprevious<CR>:else<CR>:bp<CR>:endif<CR>
+"visual search mappings
+function! s:VSetSearch()
+    let temp = @@
+    norm! gvy
+    let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+    let @@ = temp
+endfunction
+vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
+vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
 
 
-"Show tabs by pressing alt down, hide tabs by pressing alt up
-map <A-Up> :tabo<CR>:set lines+=3<CR>:let g:toggleTabs = 0<CR>
-map <A-Down> :set lines-=3<CR>:tab ball<CR>:let g:toggleTabs = 1<CR>
+"jump to last cursor position when opening a file
+"dont do it when writing a commit log entry
+autocmd BufReadPost * call SetCursorPosition()
+function! SetCursorPosition()
+    if &filetype !~ 'commit\c'
+        if line("'\"") > 0 && line("'\"") <= line("$")
+            exe "normal g`\""
+        endif
+    end
+endfunction
 
-" tab navigation (next tab or next buffer) with alt left / alt right
-map <silent><A-Right> :if g:toggleTabs == 1<CR>:tabnext<CR>:else<CR>:bn<CR>:endif<CR>
-map <silent><A-Left> :if g:toggleTabs == 1<CR>:tabprevious<CR>:else<CR>:bp<CR>:endif<CR> 
+"define :Lorem command to dump in a paragraph of lorem ipsum
+command! -nargs=0 Lorem :normal iLorem ipsum dolor sit amet, consectetur
+      \ adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      \ magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+      \ ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+      \ irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+      \ fugiat nulla pariatur.  Excepteur sint occaecat cupidatat non
+      \ proident, sunt in culpa qui officia deserunt mollit anim id est
+      \ laborum
 
-" mark whitespace at the end of lines
+"define :HighlightExcessColumns command to highlight the offending parts of
+"lines that are "too long". where "too long" is defined by &textwidth or an
+"arg passed to the command
+command! -nargs=? HighlightExcessColumns call s:HighlightExcessColumns('<args>')
+function! s:HighlightExcessColumns(width)
+    let targetWidth = a:width != '' ? a:width : &textwidth
+    if targetWidth > 0
+        exec 'match Todo /\%>' . (targetWidth+1) . 'v/'
+    else
+        echomsg "HighlightExcessColumns: set a &textwidth, or pass one in"
+    endif
+endfunction
+
+"simple template system
+command! -complete=customlist,<SID>AvailableTemplates -n=1
+            \ Template :call <SID>InsertTemplate('<args>')
+
+function! <SID>InsertTemplate(name)
+    "read in the template
+    execute 'read ~/.vim/templates/' . &filetype . '/' . a:name
+
+    "if the cursor was previously on a blank line, delete it
+    if getline(line(".")-1) =~ '^\s*$'
+        exec line(".")-1 . 'd'
+    endif
+endfunction
+
+function! <SID>AvailableTemplates(lead, cmdline, cursorpos)
+    let templateDir = expand('~/.vim/templates/' . &filetype . '/')
+    let files = split(globpath(templateDir, a:lead . '*'), '\n')
+
+    "chop off the templateDir from each file
+    return map(files, 'strpart(v:val,strlen(templateDir))')
+endfunction
+
+" CTRL-Z undoes even in visual/selection mode
+vnoremap <C-Z> <C-C>
+
+" Run Rspec for the current spec file
+function! RunRspec()
+ruby << EOF
+  buffer = VIM::Buffer.current
+  spec_file=VIM::Buffer.current.name
+  command = "ruby ~/.vim/bin/run_rspec.rb #{spec_file}"
+  print "Running Rspec for #{spec_file}. Results will be displayed in Firefox."
+  system(command)
+EOF
+endfunction
+map <F7> :call RunRspec()<cr>
+
+let g:browser = 'firefox '     
+" Open the Ruby ApiDock page for the word under cursor, in a new Firefox tab
+function! OpenRubyDoc(keyword)
+  let url = 'http://apidock.com/ruby/'.a:keyword
+  exec '!'.g:browser.' '.url
+endfunction
+noremap RB :call OpenRubyDoc(expand('<cword>'))<CR>
+
+" Open the Rails ApiDock page for the word under cursos, in a new Firefox tab
+function! OpenRailsDoc(keyword)
+  let url = 'http://apidock.com/rails/'.a:keyword
+  exec '!'.g:browser.' '.url
+endfunction
+noremap RR :call OpenRailsDoc(expand('<cword>'))<CR>
+
+set hlsearch
+
+" use ack instead of grep
+set grepprg=rak
+set grepformat=%f:%l:%m
+
+" save using sudo -- thanks tpope!
+command! -bar -nargs=0 SudoW   :silent exe "write !sudo tee % >/dev/null"|silent edit!
+
+" use osx 'open' to open urls
+command! -bar -nargs=1 OpenURL :!firefox <args>
+
+" http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
+function! CleverTab()
+  if pumvisible()
+    return "\<C-N>"
+  endif
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+    return "\<Tab>"
+  elseif exists('&omnifunc') && &omnifunc != ''
+    return "\<C-X>\<C-O>"
+  else
+    return "\<C-N>"
+  endif
+endfunction
+inoremap <silent> <Tab> <C-R>=CleverTab()<CR>
+" hitting enter with completion open selects the completion and closes preview
+"inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>\<C-O>\<C-W>z" : "\<CR>"
+"inoremap <silent> <expr> <S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
+
+" NERD plugin config
+let NERDShutUp=1 " no more f*cking 'unknown filetype' warnings!
+
+noremap <silent> <C-F11> :RN<CR>
+
 hi link localWhitespaceError Error
 au Syntax * syn match localWhitespaceError /\(\zs\%#\|\s\)\+$/ display
 au Syntax * syn match localWhitespaceError / \+\ze\t/ display
+

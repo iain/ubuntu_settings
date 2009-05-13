@@ -20,3 +20,5 @@
   diff = auto
   status = auto
   branch = auto
+[diff "ruby"]
+	funcname = ^ *\\(\\(class\\|module\\|def\\) .*\\)

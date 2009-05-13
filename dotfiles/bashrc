@@ -1,5 +1,7 @@
 PROJECT_PARENT_DIRS[0]="$HOME/code"
 
+export TERM="xterm-256color"
+
 export PATH=$PATH:/usr/lib/ruby/gems/1.8/bin
 
 # If not running interactively, don't do anything

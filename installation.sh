@@ -28,7 +28,7 @@ sudo apt-get install \
 rm -rf ~/.ubuntu_settings
 git clone git://github.com/iain/ubuntu_settings.git ~/.ubuntu_settings
 cd ~/.ubuntu_settings/
-ruby install_dotfiles.rb
+ruby install-dotfiles.rb
 
 # Install VIM stuf
 cd ~
