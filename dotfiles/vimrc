@@ -7,21 +7,21 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,perl,tex set shiftwidth=2
- 
+
 autocmd FileType c,cpp,java,javascript,python,xml,xhtml,html set shiftwidth=2
- 
+
 augroup filetypedetect
   au! BufNewFile,BufRead *.ch setf cheat
   au BufNewFile,BufRead *.liquid setf liquid
   au! BufRead,BufNewFile *.haml setfiletype haml
   autocmd BufNewFile,BufRead *.yml setf eruby
 augroup END
- 
+
 autocmd BufNewFile,BufRead *_test.rb source ~/.vim/ftplugin/shoulda.vim
 "use \rci in normal mode to indent ruby code,should install kode ,sudo gem
 "install kode
 nmap <leader>rci :%!ruby-code-indenter<cr>
- 
+
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
@@ -29,24 +29,23 @@ autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 " Load matchit (% to bounce from do to end, etc.)
 runtime! plugin/matchit.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
- 
+
 " Minibuffer Explorer Settings
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
- 
+
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
- 
+
 set nocompatible          " We're running Vim, not Vi!
 if has("gui_running") 
-  "set guifont=Consolas:h13
+  "set guifont=Consolas:h13 " font-style doesn't look right on ubuntu, maybe
+  "osx?
   set guitablabel=%M%t
-  "macmenu File.Close key=<nop>
-  no <silent> <C-w> :bd<cr>
-  ino <silent> <C-w> <C-o>:bd<cr>
-  "set go-=T
+  set go-=T " turn off toolbar
+  set guioptions-=m " turn off menubar
 end
 
 set nobackup
@@ -55,7 +54,6 @@ set path=$PWD/public/**,$PWD/**
 filetype plugin indent on " Enable filetype-specific indenting and plugins
 set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
 
-"set guioptions-=m
 "set statusline=%<%f\ %h%m%r%=%-20.(line=%l,col=%c%V,totlin=%L%)\%h%m%r%=%-40(,%n%Y%)\%P
 set statusline=
 set statusline+=%3.3n\                       " buffer number
@@ -82,6 +80,8 @@ imap <C-Up> :tabn<CR>
 imap <C-Down> :tabp<CR>
 imap <c-s> <esc><c-s>
 
+" Control C to copy in visual mode, Control C in insert or normal mode to
+" paste
 nmap <C-C> "+gP
 imap <C-C> <ESC><C-C>i
 vmap <C-C> "+y
@@ -90,11 +90,11 @@ colorscheme ir_black
 
 syntax on                 " Enable syntax highlighting
 set visualbell
- 
+
 " Load matchit (% to bounce from do to end, etc.)
 runtime! macros/matchit.vim
 set nonumber
- 
+
 augroup myfiletypes
   " Clear old autocmds in group
   autocmd!
@@ -138,7 +138,7 @@ set nofoldenable        "dont fold by default
 set foldlevel=1
 
 set wildmode=list:longest   "make cmdline tab completion similar to bash
-set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+"set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
 
 "vertical/horizontal scroll off settings
@@ -152,7 +152,7 @@ set history=256  " Number of things to remember in history.
 set autowrite  " Writes on make/shell commands
 set ruler  " Ruler on
 set nu  " Line numbers on
-set nowrap  " Line wrapping off
+set wrap  " Line wrapping off
 set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
 
 " Formatting (some of these are for coding in C and C++)
@@ -276,7 +276,7 @@ EOF
 endfunction
 map <F7> :call RunRspec()<cr>
 
-let g:browser = 'firefox '     
+let g:browser = 'firefox '
 " Open the Ruby ApiDock page for the word under cursor, in a new Firefox tab
 function! OpenRubyDoc(keyword)
   let url = 'http://apidock.com/ruby/'.a:keyword
@@ -294,8 +294,8 @@ noremap RR :call OpenRailsDoc(expand('<cword>'))<CR>
 set hlsearch
 
 " use ack instead of grep
-set grepprg=rak
-set grepformat=%f:%l:%m
+" set grepprg=rak
+" set grepformat=%f:%l:%m
 
 " save using sudo -- thanks tpope!
 command! -bar -nargs=0 SudoW   :silent exe "write !sudo tee % >/dev/null"|silent edit!
@@ -304,19 +304,19 @@ command! -bar -nargs=0 SudoW   :silent exe "write !sudo tee % >/dev/null"|silent
 command! -bar -nargs=1 OpenURL :!firefox <args>
 
 " http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
-function! CleverTab()
-  if pumvisible()
-    return "\<C-N>"
-  endif
-  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-    return "\<Tab>"
-  elseif exists('&omnifunc') && &omnifunc != ''
-    return "\<C-X>\<C-O>"
-  else
-    return "\<C-N>"
-  endif
-endfunction
-inoremap <silent> <Tab> <C-R>=CleverTab()<CR>
+" function! CleverTab()
+"   if pumvisible()
+"     return "\<C-N>"
+"   endif
+"   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+"     return "\<Tab>"
+"   elseif exists('&omnifunc') && &omnifunc != ''
+"     return "\<C-X>\<C-O>"
+"   else
+"     return "\<C-N>"
+"   endif
+" endfunction
+" inoremap <silent> <Tab> <C-R>=CleverTab()<CR>
 " hitting enter with completion open selects the completion and closes preview
 "inoremap <silent> <expr> <CR> pumvisible() ? "\<C-Y>\<C-O>\<C-W>z" : "\<CR>"
 "inoremap <silent> <expr> <S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
