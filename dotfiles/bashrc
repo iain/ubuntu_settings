@@ -1,4 +1,5 @@
 PROJECT_PARENT_DIRS[0]="$HOME/code"
+PROJECT_PARENT_DIRS[1]="$HOME/finalist"
 
 export TERM="xterm-256color"
 
