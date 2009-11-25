@@ -5,7 +5,8 @@ sudo apt-get install \
   git-core \
   ruby \
   rake \
-  vim-full \
+  vim \
+  curl \
   rdoc \
   subversion \
   ruby1.8-dev \
@@ -41,7 +42,6 @@ cd ~
 
 
 # RubyGems config
-sudo gem update --system
 sudo ln -s /usr/bin/gem1.8 /usr/bin/gem
 # no local installs please!
 sudo chown root:root -R ~/.gem
